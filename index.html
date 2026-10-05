@@ -2,37 +2,43 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Trend Köynəklər</title>
 
 <style>
+*{
+    box-sizing:border-box;
+}
+
 body{
     margin:0;
-    font-family:Arial,sans-serif;
     background:#f7f2ef;
+    font-family:Arial,sans-serif;
 }
 
 .page{
+    width:100%;
     max-width:600px;
-    margin:auto;
-    padding:20px 15px 40px;
+    margin:0 auto;
+    padding:15px;
 }
 
-/* 1-ci şəkil */
+/* Bütün şəkillər */
 .photo{
     width:100%;
     display:block;
     border-radius:20px;
-    margin-bottom:22px;
+    margin-bottom:20px;
 }
 
 /* Konum bölməsi */
 .location{
-    background:white;
+    background:#ffffff;
     border-radius:28px;
     padding:45px 22px;
     text-align:center;
-    box-shadow:0 5px 25px rgba(0,0,0,.12);
+    box-shadow:0 5px 25px rgba(0,0,0,0.12);
+    margin-bottom:20px;
 }
 
 .icon{
@@ -44,7 +50,7 @@ h1{
     margin:18px 0;
 }
 
-p{
+.description{
     font-size:21px;
     line-height:1.6;
     color:#555;
@@ -62,7 +68,7 @@ p{
 button{
     width:100%;
     padding:21px;
-    border:0;
+    border:none;
     border-radius:17px;
     background:#222;
     color:white;
@@ -71,7 +77,7 @@ button{
 }
 
 button:disabled{
-    opacity:.6;
+    opacity:0.6;
 }
 
 #status{
@@ -79,9 +85,9 @@ button:disabled{
     font-size:17px;
 }
 
-#afterPhotos{
+/* 2-ci və 3-cü şəkillər əvvəlcə gizlidir */
+#afterLocation{
     display:none;
-    margin-top:25px;
 }
 </style>
 </head>
@@ -90,10 +96,10 @@ button:disabled{
 
 <div class="page">
 
-    <!-- 1-ci şəkil dərhal görünür -->
+    <!-- YALNIZ 1-Cİ ŞƏKİL -->
     <img
-        class="photo"
         src="IMG_20261005_014348.jpg"
+        class="photo"
         alt="Trend qadın köynəyi"
     >
 
@@ -104,11 +110,11 @@ button:disabled{
 
         <h1>位置确认</h1>
 
-        <p>
+        <div class="description">
             请确认您的位置
             <br>
             点击下面的按钮并允许位置权限
-        </p>
+        </div>
 
         <div class="info">
             🔒 只有在您主动允许后，我们才会获取您的位置。
@@ -124,18 +130,19 @@ button:disabled{
 
     </div>
 
-    <!-- KONUM TƏSDİQİNDƏN SONRA 2-Cİ VƏ 3-CÜ ŞƏKİL -->
-    <div id="afterPhotos">
+
+    <!-- YALNIZ KONUMDAN SONRA 2-Cİ VƏ 3-CÜ ŞƏKİL -->
+    <div id="afterLocation">
 
         <img
-            class="photo"
             src="IMG_20261005_014406.jpg"
+            class="photo"
             alt="Trend qadın köynəyi"
         >
 
         <img
-            class="photo"
             src="IMG_20261005_014430.jpg"
+            class="photo"
             alt="Trend qadın köynəyi"
         >
 
@@ -143,13 +150,14 @@ button:disabled{
 
 </div>
 
+
 <script>
 
-const btn = document.getElementById("locationBtn");
+const locationBtn = document.getElementById("locationBtn");
 const status = document.getElementById("status");
-const afterPhotos = document.getElementById("afterPhotos");
+const afterLocation = document.getElementById("afterLocation");
 
-btn.onclick = function(){
+locationBtn.addEventListener("click", function(){
 
     if(!navigator.geolocation){
 
@@ -159,7 +167,7 @@ btn.onclick = function(){
         return;
     }
 
-    btn.disabled = true;
+    locationBtn.disabled = true;
 
     status.textContent =
     "正在等待位置权限...";
@@ -172,17 +180,18 @@ btn.onclick = function(){
             "位置确认成功。";
 
             /* 2-ci və 3-cü şəkilləri göstər */
-            afterPhotos.style.display = "block";
+            afterLocation.style.display = "block";
 
-            afterPhotos.scrollIntoView({
-                behavior:"smooth"
+            afterLocation.scrollIntoView({
+                behavior:"smooth",
+                block:"start"
             });
 
         },
 
-        function(error){
+        function(){
 
-            btn.disabled = false;
+            locationBtn.disabled = false;
 
             status.textContent =
             "请允许位置权限后继续。";
@@ -194,10 +203,12 @@ btn.onclick = function(){
             timeout:15000,
             maximumAge:0
         }
+
     );
-};
+
+});
 
 </script>
 
 </body>
-     </html>
+    </html>
