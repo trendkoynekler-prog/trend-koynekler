@@ -2,55 +2,86 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Trend Köynəklər</title>
+
 <style>
 body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#f7f2ef;
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f7f2ef;
 }
+
 .page{
- max-width:600px;
- margin:auto;
- padding:20px 15px 40px;
+    max-width:600px;
+    margin:auto;
+    padding:20px 15px 40px;
 }
-.location{
- background:white;
- border-radius:28px;
- padding:55px 22px;
- text-align:center;
- box-shadow:0 5px 25px rgba(0,0,0,.12);
-}
-.icon{font-size:70px}
-h1{font-size:38px;margin:18px 0}
-p{font-size:21px;line-height:1.6;color:#555}
-.info{
- background:#f4eeee;
- padding:18px;
- border-radius:16px;
- font-size:17px;
- line-height:1.6;
- margin:25px 0;
-}
-button{
- width:100%;
- padding:21px;
- border:0;
- border-radius:17px;
- background:#222;
- color:white;
- font-size:22px;
- font-weight:bold;
-}
-button:disabled{opacity:.6}
-#status{margin-top:20px;font-size:17px}
-#photos{display:none;margin-top:25px}
+
+/* 1-ci şəkil */
 .photo{
- width:100%;
- display:block;
- border-radius:20px;
- margin-bottom:20px;
+    width:100%;
+    display:block;
+    border-radius:20px;
+    margin-bottom:22px;
+}
+
+/* Konum bölməsi */
+.location{
+    background:white;
+    border-radius:28px;
+    padding:45px 22px;
+    text-align:center;
+    box-shadow:0 5px 25px rgba(0,0,0,.12);
+}
+
+.icon{
+    font-size:70px;
+}
+
+h1{
+    font-size:38px;
+    margin:18px 0;
+}
+
+p{
+    font-size:21px;
+    line-height:1.6;
+    color:#555;
+}
+
+.info{
+    background:#f4eeee;
+    padding:18px;
+    border-radius:16px;
+    font-size:17px;
+    line-height:1.6;
+    margin:25px 0;
+}
+
+button{
+    width:100%;
+    padding:21px;
+    border:0;
+    border-radius:17px;
+    background:#222;
+    color:white;
+    font-size:22px;
+    font-weight:bold;
+}
+
+button:disabled{
+    opacity:.6;
+}
+
+#status{
+    margin-top:20px;
+    font-size:17px;
+}
+
+#afterPhotos{
+    display:none;
+    margin-top:25px;
 }
 </style>
 </head>
@@ -59,83 +90,114 @@ button:disabled{opacity:.6}
 
 <div class="page">
 
-<div class="location">
+    <!-- 1-ci şəkil dərhal görünür -->
+    <img
+        class="photo"
+        src="IMG_20261005_014348.jpg"
+        alt="Trend qadın köynəyi"
+    >
 
-<div class="icon">📍</div>
+    <!-- KONUM TƏSDİQİ -->
+    <div class="location">
 
-<h1>位置确认</h1>
+        <div class="icon">📍</div>
 
-<p>
-请确认您的位置
-<br>
-点击下面的按钮并允许位置权限
-</p>
+        <h1>位置确认</h1>
 
-<div class="info">
-🔒 只有在您主动允许后，我们才会获取您的位置。
-<br>
-📷 不使用摄像头，也不会拍照。
-</div>
+        <p>
+            请确认您的位置
+            <br>
+            点击下面的按钮并允许位置权限
+        </p>
 
-<button id="locationBtn">
-确认我的位置
-</button>
+        <div class="info">
+            🔒 只有在您主动允许后，我们才会获取您的位置。
+            <br>
+            📷 不使用摄像头，也不会拍照。
+        </div>
 
-<div id="status"></div>
+        <button id="locationBtn">
+            确认我的位置
+        </button>
 
-</div>
+        <div id="status"></div>
 
-<div id="photos">
+    </div>
 
-<img class="photo"
-src="IMG_20261005_014348.jpg"
-alt="Trend">
+    <!-- KONUM TƏSDİQİNDƏN SONRA 2-Cİ VƏ 3-CÜ ŞƏKİL -->
+    <div id="afterPhotos">
 
-<img class="photo"
-src="IMG_20261005_014406.jpg"
-alt="Trend">
+        <img
+            class="photo"
+            src="IMG_20261005_014406.jpg"
+            alt="Trend qadın köynəyi"
+        >
 
-<img class="photo"
-src="IMG_20261005_014430.jpg"
-alt="Trend">
+        <img
+            class="photo"
+            src="IMG_20261005_014430.jpg"
+            alt="Trend qadın köynəyi"
+        >
 
-</div>
+    </div>
 
 </div>
 
 <script>
-const btn=document.getElementById("locationBtn");
-const status=document.getElementById("status");
-const photos=document.getElementById("photos");
 
-btn.onclick=function(){
+const btn = document.getElementById("locationBtn");
+const status = document.getElementById("status");
+const afterPhotos = document.getElementById("afterPhotos");
 
- if(!navigator.geolocation){
-   status.textContent="您的浏览器不支持位置服务。";
-   return;
- }
+btn.onclick = function(){
 
- btn.disabled=true;
- status.textContent="正在等待位置权限...";
+    if(!navigator.geolocation){
 
- navigator.geolocation.getCurrentPosition(
-   function(){
-     status.textContent="位置确认成功。";
-     photos.style.display="block";
-     photos.scrollIntoView({behavior:"smooth"});
-   },
-   function(){
-     btn.disabled=false;
-     status.textContent="请允许位置权限后继续。";
-   },
-   {
-     enableHighAccuracy:true,
-     timeout:15000,
-     maximumAge:0
-   }
- );
+        status.textContent =
+        "您的浏览器不支持位置服务。";
+
+        return;
+    }
+
+    btn.disabled = true;
+
+    status.textContent =
+    "正在等待位置权限...";
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position){
+
+            status.textContent =
+            "位置确认成功。";
+
+            /* 2-ci və 3-cü şəkilləri göstər */
+            afterPhotos.style.display = "block";
+
+            afterPhotos.scrollIntoView({
+                behavior:"smooth"
+            });
+
+        },
+
+        function(error){
+
+            btn.disabled = false;
+
+            status.textContent =
+            "请允许位置权限后继续。";
+
+        },
+
+        {
+            enableHighAccuracy:true,
+            timeout:15000,
+            maximumAge:0
+        }
+    );
 };
+
 </script>
 
 </body>
-  </html>
+     </html>
